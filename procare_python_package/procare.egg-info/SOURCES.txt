@@ -4,6 +4,7 @@ README.md
 setup.py
 procare/__init__.py
 procare/convert.py
+procare/convertpdb.py
 procare/info.py
 procare/procarescores.py
 procare.egg-info/PKG-INFO
