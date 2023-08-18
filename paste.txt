@@ -1,0 +1,5 @@
+conda activate procare
+
+python procare_launcher.py -s 2rh1_cavity.mol2 -t 5d6l_cavity.mol2 --transform --ligandtransform 2rh1_ligand.mol2
+
+pcl_viewer xxx.pcd

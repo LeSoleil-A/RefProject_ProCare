@@ -1,0 +1,16 @@
+LICENCE.txt
+MANIFEST.in
+README.md
+setup.py
+procare/__init__.py
+procare/convert.py
+procare/info.py
+procare/procarescores.py
+procare.egg-info/PKG-INFO
+procare.egg-info/SOURCES.txt
+procare.egg-info/dependency_links.txt
+procare.egg-info/requires.txt
+procare.egg-info/top_level.txt
+procare/open3d/__init__.py
+procare/open3d/j_visualizer.py
+procare/open3d/open3d.cpython-37m-x86_64-linux-gnu.so
