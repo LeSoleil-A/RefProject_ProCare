@@ -137,6 +137,54 @@ class _pcd_:
         else:
             return -1
         
+    def _write_pdb_fake(self, ofile_, coordinates_, atom_, atom_type_,
+                                                    macromol_="PROTEIN"):
+
+        
+        if ofile_[-4:] != '.pdb':
+            ofile_ += '.pdb'
+        name = os.path.basename(ofile_)
+        name = os.path.splitext(name)[0]
+
+        of_string = ""
+        of_string += "# Modified by ProCarePDB Version 1.0\n"
+        of_string += "# Modification time: {}\n".format(
+                                strftime("%a %d %b %Y %H:%M:%S", localtime()))
+        of_string += "# Name: {}.pdb\n\n".format(name)
+
+        of_string += "@<TRIPOS>MOLECULE\n"
+        of_string += "{}\n".format(name)
+        of_string += "{:>5}{:>6}{:>6}{:>6}{:>6}\n".format(
+                                                len(coordinates_), 0, 0, 0, 0)
+        of_string += "{}\n".format(macromol_)
+        of_string += "NO_CHARGES\n"
+        of_string += "@<TRIPOS>ATOM"
+
+        # Fake residues in PDB: all RES
+        residue = "RES"
+
+        for i, point in enumerate(coordinates_):
+            x, y, z, rgb = [*point]
+            of_string += ("\n{:>7} {:<8} {:>9.4f} {:>9.4f} {:>9.4f} "
+                          "{:<5} {:>5} {:<8} {:>9}".format(i+1,
+                                                     atom_[rgb],
+                                                     x,
+                                                     y,
+                                                     z,
+                                                     atom_type_[rgb],
+                                                     i+1,
+                                                     residue+str(i+1),
+                                                     0.0000
+                                                    ))
+        of_string += "\n@<TRIPOS>BOND"
+        
+        with open(ofile_, 'w') as of:
+            of.write(of_string)
+        print("written pdb to {}".format(ofile_))
+        self.type = "pcd"
+        return ofile_
+
+        
 
 class _volsite_cavity_pdb_(_pdb_, _pcd_):
     
@@ -196,3 +244,6 @@ class _volsite_cavity_pdb_(_pdb_, _pcd_):
     # def write_pdb(self, ofile_, coordinates_):
     #     return self._write_pdb(ofile_, coordinates_, self.ATOM, self.ATOM_TYPE,
     #                 self.RESIDUE)
+
+    def write_pdb_fake(self, ofile_, coordinates_):
+        return self._write_pdb_fake(ofile_, coordinates_, self.ATOM, self.ATOM_TYPE)

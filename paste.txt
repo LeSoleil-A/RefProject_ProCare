@@ -2,4 +2,6 @@ conda activate procare
 
 python procare_launcher.py -s 2rh1_cavity.mol2 -t 5d6l_cavity.mol2 --transform --ligandtransform 2rh1_ligand.mol2
 
+python pdb_launcher.py -s 1ha3A.pdb -t 1yr8A.pdb --transform
+
 pcl_viewer xxx.pcd

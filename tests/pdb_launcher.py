@@ -1,3 +1,66 @@
+# ----------------------------------------------------------------------------
+# <                           ProCare For PDB                                >
+# ----------------------------------------------------------------------------
+
+# Step One Function
+def process_pointcloud(pointcloud_, radius_normal_, 
+        radius_feature_, max_nn_normal_, max_nn_feature_):
+
+    """This fuction estimates normals and calculate 
+    the fast point feature histogramm"""
+
+    # returns bool
+    estimate_normals(pointcloud_, KDTreeSearchParamHybrid(
+               radius=radius_normal_, max_nn=max_nn_normal_)) 
+    # compute FPFH feature for a point cloud
+    cfpfh = compute_cfpfh_feature(pointcloud_, KDTreeSearchParamHybrid(
+               radius=radius_feature_, max_nn=max_nn_feature_))
+    return cfpfh, pointcloud_
+
+# Step Two Function
+def global_registration(source_, target_, cfpfh_source_, cfpfh_target_, 
+        distance_threshold_, transformation_type_, n_ransac_, 
+        similarity_threshold_, max_iter_, max_valid_):
+
+    """Initial RANSAC alignement based of features"""
+
+    function_transtype = FUNCTIONS[transformation_type_]
+    # default TransformationEstimationPointToPoint: with_scaling = False
+    # Function for global RANSAC registration based on feature matching
+    result = registration_ransac_based_on_feature_matching(source_, target_,
+        cfpfh_source_, cfpfh_target_,
+        max_correspondence_distance=distance_threshold_,
+        estimation_method=function_transtype(), ransac_n=n_ransac_,
+        checkers=[CorrespondenceCheckerBasedOnEdgeLength(similarity_threshold_),
+        CorrespondenceCheckerBasedOnDistance(distance_threshold_)],
+        criteria=RANSACConvergenceCriteria(max_iter_, max_valid_))
+    return result 
+
+# Step Three Function
+def fine_registration(source_, target_, result_ransac_, distance_threshold_, 
+        transformation_type_, relative_rmse_, relative_fitness_, max_iter_):
+    
+    function_transtype = FUNCTIONS[transformation_type_]
+    # default TransformationEstimationPointToPoint: with_scaling = False
+    # Function for ICP registration
+    result = registration_icp(source_, target_,
+        max_correspondence_distance=distance_threshold_,
+        init=result_ransac_.transformation,
+        estimation_method=function_transtype(),
+        criteria=ICPConvergenceCriteria(relative_fitness_, relative_rmse_, max_iter_))
+    return result
+
+# Step Four Function
+def transform(pdb_ofile_, transformed_coords_, source_color_):
+    rotated_pdb = _volsite_cavity_pdb_()
+    rot_coords = []
+    for point, color in zip(transformed_coords_, source_color_):
+        rot_coords.append([point[0], point[1], point[2], color])
+
+    rotated_pdb.write_pdb_fake(pdb_ofile_, rot_coords)
+
+
+
 if __name__ == '__main__':
   
     from procare.open3d.open3d.registration import registration_icp
@@ -16,7 +79,7 @@ if __name__ == '__main__':
     from procare.open3d.open3d.visualization import draw_geometries
 
     from procare.convertpdb import _volsite_cavity_pdb_
-    from procare.procarescores import _ph4_ext_
+    from procare.procarescorespdb import _ph4_ext_pdb_
 
     import os
     import argparse
@@ -26,6 +89,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Parameters for ProCare')
 
+
     # inputs
     parser.add_argument('-s', '--source', type=str,
         help='Source pdb file', 
@@ -34,6 +98,98 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--target', type=str,
         help='Target pdb file', 
         required=True)
+
+    # normals
+    parser.add_argument('-nr', '--normalrad', type=float,
+        help='Radius for local surface normal estimation on a point', 
+        required=False,
+        default=3.1)
+
+    parser.add_argument('-nm', '--normalmaxn', type=int,
+        help=('Maximum number of neighbors to consider for local surface normal '
+              'estimation on a point'), 
+        required=False,
+        default=471)
+
+    # features
+    parser.add_argument('-fr', '--featurerad', type=float,
+        help='Radius for local surface feature estimation on a point', 
+        required=False,
+        default=3.1)
+
+    parser.add_argument('-fm', '--featuremaxn', type=int,
+        help=('Maximum number of neighbors to consider for local surface feature '
+              'estimation on a point'), 
+        required=False,
+        default=135)
+
+    # global registration
+    parser.add_argument('-gt', '--globaltranstype', type=str,
+        help='Transformation estimation type for global registration', 
+        required=False,
+        default='TransformationEstimationPointToPoint')
+
+    parser.add_argument('-gd', '--globaldist', type=float,
+        help='Distance threshold for correspondences set in global registration', 
+        required=False,
+        default=1.5)       
+    
+    # ransac
+    parser.add_argument('-rv', '--ransacvalid', type=int, 
+        help='RANCAC convergence criteria: maximum validation', 
+        required=False,
+        default=500)
+
+    parser.add_argument('-ri', '--ransaciter', type=int,
+        help='RANCAC convergence criteria: maximum iteration', 
+        required=False,
+        default=4000000)
+
+    parser.add_argument('-rn', '--ransacn', type=int,
+        help='RANSAC: number of pairs to validate at each iteration', 
+        required=False,
+        default=4)
+
+    # checker
+    parser.add_argument('-cs', '--checkersim', type=float, 
+        help='Checker similarity threshold: between 0 and 1', 
+        required=False,
+        default=0.9)   
+
+    # icp
+    parser.add_argument('-it', '--icptranstype', type=str,
+        help='Transformation estimation type for ICP registration', 
+        required=False,
+        default='TransformationEstimationPointToPoint')
+
+    parser.add_argument('-id', '--icpdist', type=float,
+        help='Distance threshold for correspondences set in ICP registration', 
+        required=False,
+        default=3)
+
+    parser.add_argument('-ir', '--icprmse', type=float,
+        help='RMSE relative threshold for ICP terminaison', # default observed as acceptable
+        required=False,
+        default=10e-6)
+
+    parser.add_argument('-if', '--icpfitness',type=float,
+        help='Fitness relative threshold for ICP terminaison', 
+        required=False,
+        default=10e-6)
+
+    parser.add_argument('-ii', '--icpiter', type=int,
+        help='ICP convergence criteria: maximum iteration', 
+        required=False,
+        default=100)     
+    
+    # transform
+    parser.add_argument('--transform', action='store_true',
+        help='output rotated mol2', 
+        required=False)
+    
+    parser.add_argument('--ligandtransform', type=str, nargs='+',
+        help='output rotated ligand and/or protein mol2', 
+        required=False)
 
     args = parser.parse_args()
 
@@ -45,6 +201,7 @@ if __name__ == '__main__':
     }
 
     # Source and target loading
+    # sequential loading: sourcefile and target files can have the same file names
     """
     e.g.
     ##############################source_file##############################
@@ -67,7 +224,117 @@ if __name__ == '__main__':
         target = read_point_cloud(target_file)
     
     if source_file and target_file != -1:
-        print("read in successfully!")
+        # print("read in successfully!")
+
+        ########################################### STEP 1: Read in the point clouds#########################################
+
+        # estimates normals and calculate the fast point feature histogramm (FPFH)
+        # source_cfpfh: FPFH feature for a point cloud (open3d.pipelines.registration.Feature)
+        # source: point cloud (with normals?)
+
+        source_cfpfh, source = process_pointcloud(pointcloud_=source,
+                                             radius_normal_=args.normalrad,
+                                             radius_feature_=args.featurerad,
+                                             max_nn_normal_=args.normalmaxn,
+                                             max_nn_feature_=args.featuremaxn)
+        
+        target_cfpfh, target = process_pointcloud(pointcloud_=target,
+                                         radius_normal_=args.normalrad,
+                                         radius_feature_=args.featurerad,
+                                         max_nn_normal_=args.normalmaxn,
+                                         max_nn_feature_=args.featuremaxn)
+        
+        # if source != None:
+        #     print("process success")
+
+        ########################################### STEP 2: RANSAC alignement##########################################
+
+        # Initial RANSAC alignement based of features
+        """
+        Input:
+            --ransacn: RANSAC: number of pairs to validate at each iteration
+            --checkersim: Checker similarity threshold: between 0 and 1
+        Output:
+            result_global_cfpfh: contains the registration results (open3d.pipelines.registration.RegistrationResult)
+        """
+        result_global_cfpfh = global_registration(source_=source,
+                                            target_=target,
+                                            cfpfh_source_=source_cfpfh,
+                                            cfpfh_target_=target_cfpfh,
+                                            distance_threshold_=args.globaldist,
+                                            transformation_type_=args.globaltranstype,
+                                            n_ransac_=args.ransacn,
+                                            similarity_threshold_=args.checkersim,
+                                            max_iter_=args.ransaciter,
+                                            max_valid_=args.ransacvalid)
+        
+        # if result_global_cfpfh != None:
+        #     print("global registration success")
+
+        ########################################### STEP 3: ICP alignement##########################################
+        # Initial ICP alignement based of features
+        """
+        Input:
+            --icprmse: RMSE relative threshold for ICP terminaison
+            --icpfitness: Fitness relative threshold for ICP terminaison
+        Output:
+            result_fine_cfpfh: contains the registration results (open3d.pipelines.registration.RegistrationResult)
+        """
+        result_fine_cfpfh = fine_registration(source_=source,
+                                        target_=target,
+                                        result_ransac_=result_global_cfpfh,
+                                        distance_threshold_=args.icpdist,
+                                        transformation_type_=args.icptranstype,
+                                        relative_rmse_=args.icprmse,
+                                        relative_fitness_=args.icpfitness,
+                                        max_iter_=args.icpiter)     
+        
+        # if result_fine_cfpfh != None:
+        #     print("fine registration success")
+
+        ########################################### STEP 4: Calculate Similarity##########################################
+        source_transformed_cfpfh = copy.deepcopy(source)
+
+        # open3d.geometry.Geometry3D (The estimated transformation matrix: 4*4 float64 numpy array)
+        """
+        Is this what we need?
+        e.g:result_fine_cfpfh.transformation: 
+            [[ 9.99820290e-01  1.87492883e-02  2.80212393e-03  5.28324300e+01]
+             [-1.87562194e-02  9.99821041e-01  2.46803150e-03 -9.68504437e-01]
+             [-2.75534863e-03 -2.52014522e-03  9.99993028e-01  1.74062308e-01]
+             [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+        """
+        # source_transformed_cfpfh: transformation result
+        source_transformed_cfpfh.transform(result_fine_cfpfh.transformation)
+        
+        # output rotated pdb (fake version)
+        if args.transform:
+            rot_file_cfpfh = 'cfpfh_{}.pdb'.format(os.path.splitext(source_file)[0])
+            transform(pdb_ofile_=rot_file_cfpfh,
+                        transformed_coords_=source_transformed_cfpfh.points,
+                        source_color_=source_color)
+
+        """
+        Version 1.0: Do not consider ligands   
+        """
+        # output rotated ligand and/or protein mol2
+        # if args.ligandtransform is not None:
+        #     for molecule in args.ligandtransform:
+        #         lig = os.path.basename(molecule)
+        #         cfpfh_lig = 'cfpfh_{}'.format(lig)
+        #         transform_ligand(molecule,
+        #                     result_fine_cfpfh.transformation,
+        #                     cfpfh_lig)
+      
+        """
+        TO DO:
+        """
+        # ph4_ext = _ph4_ext_pdb_(source_transformed_cfpfh.points, target.points, 
+        #                                     source_prop, target_prop, 1.5)
+
+        
+
+
 
 
 
