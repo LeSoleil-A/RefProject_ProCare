@@ -182,7 +182,7 @@ if __name__ == '__main__':
         required=False,
         default=100)     
     
-    # transform
+    # transform output
     parser.add_argument('--transform', action='store_true',
         help='output rotated mol2', 
         required=False)
@@ -190,6 +190,30 @@ if __name__ == '__main__':
     parser.add_argument('--ligandtransform', type=str, nargs='+',
         help='output rotated ligand and/or protein mol2', 
         required=False)
+    
+    # similarity output
+    parser.add_argument('-so', '--scoreoutput', type=str,
+        help='Simplifiled output file: scores', 
+        required=False,
+        default='procare_scores.tsv')
+    
+    parser.add_argument('-o', '--output', type=str,
+        help='Complete output file', 
+        required=False,
+        default='procare.tsv')
+    
+    parser.add_argument('-p', '--paramid', type=str,
+        help='ID for parameters identification', 
+        required=False,
+        default='default')
+
+    parser.add_argument('-c', '--classification', type=str,
+        help='Class for retrospective screening: 0 or 1',
+        choices=['0', '1'],
+        required=False,
+        default='NAN')
+
+
 
     args = parser.parse_args()
 
@@ -329,13 +353,111 @@ if __name__ == '__main__':
         """
         TO DO:
         """
-        # ph4_ext = _ph4_ext_pdb_(source_transformed_cfpfh.points, target.points, 
-        #                                     source_prop, target_prop, 1.5)
-
+        ph4_ext = _ph4_ext_pdb_(source_transformed_cfpfh.points, target.points, 
+                                            source_prop, target_prop, 1.5)
         
+        ratio_aligned, \
+            ratio_C_in_aligned, ratio_N_in_aligned, \
+            ratio_O_in_aligned, ratio_S_in_aligned = ph4_ext.get_similarity_by_rules()
+        
+        # Use tversky_similarity to calculate similarity score
+        score = ph4_ext.tversky_similarity()
 
 
 
+        ########################################### Write out the result ##########################################
 
+        if not os.path.isfile(args.scoreoutput):
+            with open(args.scoreoutput, "w") as of:
+                of.write("Source\tTarget\tScore\ns")
+        
+        with open(args.scoreoutput, "a") as of:
+            of.write("{}\t{}\t{}\n".format(os.path.splitext(source_file)[0],
+                                           os.path.splitext(target_file)[0],
+                                           score))
+            
+        # output contributions of the differnt ph4 to the global score
+        # output matrix components
 
+        if not os.path.isfile(args.output):
+            with open(args.output, "w") as of:
+                of.write("Param_id\tSource\tTarget\tClass\tScore\t"
 
+                         "C_contrib\tN_contrib\tO_contrib\tS_contrib\t"
+
+                         "G_fitness\tG_RMSE\tICP_fitness\tICP_RMSE\t"
+
+                         "G_11\tG_12\tG_13\tG_14\t"
+                         "G_21\tG_22\tG_23\tG_24\t"
+                         "G_31\tG_32\tG_33\tG_34\t"
+                         "G_41\tG_42\tG_43\tG_44\t"
+
+                         "ICP_11\tICP_12\tICP_13\tICP_14\t"
+                         "ICP_21\tICP_22\tICP_23\tICP_24\t"
+                         "ICP_31\tICP_32\tICP_33\tICP_34\t"
+                         "ICP_41\tICP_42\tICP_43\tICP_44\n")    
+
+        with open(args.output, 'a') as of:
+            of.write(("{}\t{}\t{}\t{}\t{}\t"
+                      "{}\t{}\t{}\t{}\t"
+                      "{}\t{}\t{}\t{}\t"
+                      "{}\t{}\t{}\t{}\t"
+                      "{}\t{}\t{}\t{}\t"
+                      "{}\t{}\t{}\t{}\t"
+                      "{}\t{}\t{}\t{}\t"
+                      "{}\t{}\t{}\t{}\t"
+                      "{}\t{}\t{}\t{}\t"
+                      "{}\t{}\t{}\t{}\t"
+                      "{}\t{}\t{}\t{}\n"
+                      ).format(args.paramid,
+                               os.path.splitext(source_file)[0],
+                               os.path.splitext(target_file)[0],
+                               args.classification,
+                               score,
+                               ratio_C_in_aligned,
+                               ratio_N_in_aligned,
+                               ratio_O_in_aligned,
+                               ratio_S_in_aligned,
+                               result_global_cfpfh.fitness,
+                               result_global_cfpfh.inlier_rmse,
+                               result_fine_cfpfh.fitness,
+                               result_fine_cfpfh.inlier_rmse,
+                               np.array(result_global_cfpfh.transformation)[0][0],
+                               np.array(result_global_cfpfh.transformation)[0][1],
+                               np.array(result_global_cfpfh.transformation)[0][2],
+                               np.array(result_global_cfpfh.transformation)[0][3],
+                               np.array(result_global_cfpfh.transformation)[1][0],
+                               np.array(result_global_cfpfh.transformation)[1][1],
+                               np.array(result_global_cfpfh.transformation)[1][2],
+                               np.array(result_global_cfpfh.transformation)[1][3],
+                               np.array(result_global_cfpfh.transformation)[2][0],
+                               np.array(result_global_cfpfh.transformation)[2][1],
+                               np.array(result_global_cfpfh.transformation)[2][2],
+                               np.array(result_global_cfpfh.transformation)[2][3],
+                               np.array(result_global_cfpfh.transformation)[3][0],
+                               np.array(result_global_cfpfh.transformation)[3][1],
+                               np.array(result_global_cfpfh.transformation)[3][2],
+                               np.array(result_global_cfpfh.transformation)[3][3],
+                               np.array(result_fine_cfpfh.transformation)[0][0],
+                               np.array(result_fine_cfpfh.transformation)[0][1],
+                               np.array(result_fine_cfpfh.transformation)[0][2],
+                               np.array(result_fine_cfpfh.transformation)[0][3],
+                               np.array(result_fine_cfpfh.transformation)[1][0],
+                               np.array(result_fine_cfpfh.transformation)[1][1],
+                               np.array(result_fine_cfpfh.transformation)[1][2],
+                               np.array(result_fine_cfpfh.transformation)[1][3],
+                               np.array(result_fine_cfpfh.transformation)[2][0],
+                               np.array(result_fine_cfpfh.transformation)[2][1],
+                               np.array(result_fine_cfpfh.transformation)[2][2],
+                               np.array(result_fine_cfpfh.transformation)[2][3],
+                               np.array(result_fine_cfpfh.transformation)[3][0],
+                               np.array(result_fine_cfpfh.transformation)[3][1],
+                               np.array(result_fine_cfpfh.transformation)[3][2],
+                               np.array(result_fine_cfpfh.transformation)[3][3]
+                               ))
+
+        # cleaning
+        if source_file == target_file:
+            os.system('rm {}'.format(source_file))
+        else:
+            os.system('rm {} {}'.format(source_file, target_file))

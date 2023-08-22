@@ -7,6 +7,7 @@ procare/convert.py
 procare/convertpdb.py
 procare/info.py
 procare/procarescores.py
+procare/procarescorespdb.py
 procare.egg-info/PKG-INFO
 procare.egg-info/SOURCES.txt
 procare.egg-info/dependency_links.txt
