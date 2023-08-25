@@ -50,7 +50,7 @@ def fine_registration(source_, target_, result_ransac_, distance_threshold_,
         criteria=ICPConvergenceCriteria(relative_fitness_, relative_rmse_, max_iter_))
     return result
 
-# Step Four Function
+# Version 1.0: Step Four Function
 def transform(pdb_ofile_, transformed_coords_, source_color_):
     rotated_pdb = _volsite_cavity_pdb_()
     rot_coords = []
@@ -58,6 +58,15 @@ def transform(pdb_ofile_, transformed_coords_, source_color_):
         rot_coords.append([point[0], point[1], point[2], color])
 
     rotated_pdb.write_pdb_fake(pdb_ofile_, rot_coords)
+
+# Version 2.0: Step Four Function
+def transform_coor(source_file_, pdb_ofile_, transformed_coords_, source_color_):
+    rotated_pdb = _volsite_cavity_pdb_()
+    rot_coords = []
+    for point, color in zip(transformed_coords_, source_color_):
+        rot_coords.append([point[0], point[1], point[2], color])
+
+    rotated_pdb.write_pdb_from_coor(source_file_, pdb_ofile_, rot_coords)
 
 
 
@@ -281,6 +290,7 @@ if __name__ == '__main__':
         Output:
             result_global_cfpfh: contains the registration results (open3d.pipelines.registration.RegistrationResult)
         """
+        
         result_global_cfpfh = global_registration(source_=source,
                                             target_=target,
                                             cfpfh_source_=source_cfpfh,
@@ -330,13 +340,24 @@ if __name__ == '__main__':
         """
         # source_transformed_cfpfh: transformation result
         source_transformed_cfpfh.transform(result_fine_cfpfh.transformation)
+        # print(np.asarray(source_transformed_cfpfh.points))
         
-        # output rotated pdb (fake version)
+        # Version 1.0: output rotated pdb (fake version)
+        # if args.transform:
+        #     rot_file_cfpfh = 'cfpfh_{}.pdb'.format(os.path.splitext(source_file)[0])
+        #     transform(pdb_ofile_=rot_file_cfpfh,
+        #                 transformed_coords_=source_transformed_cfpfh.points,
+        #                 source_color_=source_color)
+
+        # Version 2.0: output rotated pdb
         if args.transform:
-            rot_file_cfpfh = 'cfpfh_{}.pdb'.format(os.path.splitext(source_file)[0])
-            transform(pdb_ofile_=rot_file_cfpfh,
-                        transformed_coords_=source_transformed_cfpfh.points,
-                        source_color_=source_color)
+            rot_file_rot = 'rot_{}.pdb'.format(os.path.splitext(source_file)[0])
+            transform_coor(source_file_=args.source,
+                      pdb_ofile_=rot_file_rot,
+                      transformed_coords_=source_transformed_cfpfh.points,
+                      source_color_=source_color)
+        
+        
 
         """
         Version 1.0: Do not consider ligands   
@@ -350,12 +371,11 @@ if __name__ == '__main__':
         #                     result_fine_cfpfh.transformation,
         #                     cfpfh_lig)
       
-        """
-        TO DO:
-        """
         ph4_ext = _ph4_ext_pdb_(source_transformed_cfpfh.points, target.points, 
                                             source_prop, target_prop, 1.5)
         
+        # print(np.asarray(target.points))
+
         ratio_aligned, \
             ratio_C_in_aligned, ratio_N_in_aligned, \
             ratio_O_in_aligned, ratio_S_in_aligned = ph4_ext.get_similarity_by_rules()
@@ -456,8 +476,8 @@ if __name__ == '__main__':
                                np.array(result_fine_cfpfh.transformation)[3][3]
                                ))
 
-        # cleaning
-        if source_file == target_file:
-            os.system('rm {}'.format(source_file))
-        else:
-            os.system('rm {} {}'.format(source_file, target_file))
+        # # cleaning
+        # # if source_file == target_file:
+        # #     os.system('rm {}'.format(source_file))
+        # # else:
+        # #     os.system('rm {} {}'.format(source_file, target_file))

@@ -136,9 +136,9 @@ class _pcd_:
             return coordinates
         else:
             return -1
-        
-    def _write_pdb_fake(self, ofile_, coordinates_, atom_, atom_type_,
-                                                    macromol_="PROTEIN"):
+    
+    # Version 1.0: write fake pdb files
+    def _write_pdb_fake(self, ofile_, coordinates_, atom_, atom_type_, macromol_="PROTEIN"):
 
         
         if ofile_[-4:] != '.pdb':
@@ -177,14 +177,72 @@ class _pcd_:
                                                      0.0000
                                                     ))
         of_string += "\n@<TRIPOS>BOND"
+
+        # Version 2.0 -- write correct pdb
+        # of_string = []
+
+        # recordName = "ATOM  "
+        # resName = "RES "
+        # chainName = "CHA"
+        # resIC = " "
+        # for i, point in enumerate(coordinates_):
+        #     x, y, z, rgb = [*point]
+        #     line = "%s%5s %-4s %3s %s%4s%1s   %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n" % (
+        #                 recordName, i, atom_[rgb], resName, chainName, i, resIC, x,
+        #                 y, z, atom_[rgb])
+        #     of_string.append(line)
+
         
         with open(ofile_, 'w') as of:
             of.write(of_string)
         print("written pdb to {}".format(ofile_))
         self.type = "pcd"
         return ofile_
-
+    
+    def _write_pdb_from_coor(self, source_file_, ofile_, coordinates_, atom_, atom_type_, macromol_="PROTEIN"):
         
+        if source_file_[-4:] != '.pdb':
+            print("incorrect file extension")
+            print("file format may be wrong --> no output")
+        
+        oflines = []
+
+        with open(source_file_, "r") as f:
+            line = f.readline()
+            while line[0:4]!="ATOM":
+                oflines.append(line)
+                line = f.readline()
+            
+            count = 0
+
+            while line:
+                dat_in = line[0:80].split()
+                # delete empty lines
+                if len(dat_in) == 0:
+                    line = f.readline()
+                    continue
+
+                if(dat_in[0] == "ATOM"):
+                    x = coordinates_[count][0]
+                    y = coordinates_[count][1]
+                    z = coordinates_[count][2]
+                    rgb = coordinates_[count][3]
+                    if(line[76:78].strip() == atom_[rgb]):
+                        newLine =  "%30s%8.3f%8.3f%8.3f%26s\n" % (line[0:30], x,y,z, line[54:80])
+                        oflines.append(newLine)
+                        count = count + 1
+                    else:
+                        print("Wrong Match! source atom: " + line[76:78].strip() + " target_atom: " + atom_[rgb])
+                        break
+                
+                line = f.readline()
+               
+        with open(ofile_, 'w') as of:
+            of.writelines(oflines)
+        print("written pdb to {}".format(ofile_))
+        self.type = "pcd"
+        return ofile_
+    
 
 class _volsite_cavity_pdb_(_pdb_, _pcd_):
     
@@ -230,20 +288,11 @@ class _volsite_cavity_pdb_(_pdb_, _pcd_):
 
     def pdb_to_pcd(self, ifile_):
         return self._pdb_to_pcd(ifile_, self.COLOR)
-        
 
-
-    # donot write pdb
-    # def pcd_to_pdb(self, ifile_):
-    #     return self._pcd_to_pdb(ifile_, self.ATOM,
-    #                                      self.ATOM_TYPE,
-    #                                      self.RESIDUE)
-
-
-
-    # def write_pdb(self, ofile_, coordinates_):
-    #     return self._write_pdb(ofile_, coordinates_, self.ATOM, self.ATOM_TYPE,
-    #                 self.RESIDUE)
-
+    # Version 1.0 write pdb function
     def write_pdb_fake(self, ofile_, coordinates_):
         return self._write_pdb_fake(ofile_, coordinates_, self.ATOM, self.ATOM_TYPE)
+
+    # Version 2.0 write pdb function: replacing the original coordinates
+    def write_pdb_from_coor(self, source_file_, ofile_, coordinates_):
+        return self._write_pdb_from_coor(source_file_, ofile_, coordinates_, self.ATOM, self.ATOM_TYPE)
