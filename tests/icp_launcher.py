@@ -1,5 +1,6 @@
 # ----------------------------------------------------------------------------
-# <                           ProCare For PDB                                >
+# <                     ProCare For PDB only use ICP                         >
+#                            Seems not effective
 # ----------------------------------------------------------------------------
 
 # Step One Function
@@ -18,26 +19,7 @@ def process_pointcloud(pointcloud_, radius_normal_,
     return cfpfh, pointcloud_
 
 # Step Two Function
-def global_registration(source_, target_, cfpfh_source_, cfpfh_target_, 
-        distance_threshold_, transformation_type_, n_ransac_, 
-        similarity_threshold_, max_iter_, max_valid_):
-
-    """Initial RANSAC alignement based of features"""
-
-    function_transtype = FUNCTIONS[transformation_type_]
-    # default TransformationEstimationPointToPoint: with_scaling = False
-    # Function for global RANSAC registration based on feature matching
-    result = registration_ransac_based_on_feature_matching(source_, target_,
-        cfpfh_source_, cfpfh_target_,
-        max_correspondence_distance=distance_threshold_,
-        estimation_method=function_transtype(), ransac_n=n_ransac_,
-        checkers=[CorrespondenceCheckerBasedOnEdgeLength(similarity_threshold_),
-        CorrespondenceCheckerBasedOnDistance(distance_threshold_)],
-        criteria=RANSACConvergenceCriteria(max_iter_, max_valid_))
-    return result 
-
-# Step Three Function
-def fine_registration(source_, target_, result_ransac_, distance_threshold_, 
+def fine_registration(source_, target_, distance_threshold_, 
         transformation_type_, relative_rmse_, relative_fitness_, max_iter_):
     
     function_transtype = FUNCTIONS[transformation_type_]
@@ -45,12 +27,11 @@ def fine_registration(source_, target_, result_ransac_, distance_threshold_,
     # Function for ICP registration
     result = registration_icp(source_, target_,
         max_correspondence_distance=distance_threshold_,
-        init=result_ransac_.transformation,
         estimation_method=function_transtype(),
         criteria=ICPConvergenceCriteria(relative_fitness_, relative_rmse_, max_iter_))
     return result
 
-# Version 1.0: Step Four Function
+# Version 1.0: Step Three Function
 def transform(pdb_ofile_, transformed_coords_, source_color_):
     rotated_pdb = _volsite_cavity_pdb_()
     rot_coords = []
@@ -59,7 +40,7 @@ def transform(pdb_ofile_, transformed_coords_, source_color_):
 
     rotated_pdb.write_pdb_fake(pdb_ofile_, rot_coords)
 
-# Version 2.0: Step Four Function
+# Version 2.0: Step Three Function
 def transform_coor(source_file_, pdb_ofile_, transformed_coords_, source_color_):
     rotated_pdb = _volsite_cavity_pdb_()
     rot_coords = []
@@ -73,14 +54,10 @@ def transform_coor(source_file_, pdb_ofile_, transformed_coords_, source_color_)
 if __name__ == '__main__':
   
     from procare.open3d.open3d.registration import registration_icp
-    from procare.open3d.open3d.registration import registration_ransac_based_on_feature_matching
     from procare.open3d.open3d.geometry import read_point_cloud
     from procare.open3d.open3d.registration import compute_cfpfh_feature
     from procare.open3d.open3d.geometry import estimate_normals
     from procare.open3d.open3d.geometry import KDTreeSearchParamHybrid
-    from procare.open3d.open3d.registration import CorrespondenceCheckerBasedOnEdgeLength
-    from procare.open3d.open3d.registration import CorrespondenceCheckerBasedOnDistance
-    from procare.open3d.open3d.registration import RANSACConvergenceCriteria
     from procare.open3d.open3d.registration import ICPConvergenceCriteria
     from procare.open3d.open3d.registration import TransformationEstimationPointToPoint
     from procare.open3d.open3d.registration import TransformationEstimationPointToPlane
@@ -130,40 +107,7 @@ if __name__ == '__main__':
         help=('Maximum number of neighbors to consider for local surface feature '
               'estimation on a point'), 
         required=False,
-        default=135)
-
-    # global registration
-    parser.add_argument('-gt', '--globaltranstype', type=str,
-        help='Transformation estimation type for global registration', 
-        required=False,
-        default='TransformationEstimationPointToPoint')
-
-    parser.add_argument('-gd', '--globaldist', type=float,
-        help='Distance threshold for correspondences set in global registration', 
-        required=False,
-        default=1.5)       
-    
-    # ransac
-    parser.add_argument('-rv', '--ransacvalid', type=int, 
-        help='RANCAC convergence criteria: maximum validation', 
-        required=False,
-        default=500)
-
-    parser.add_argument('-ri', '--ransaciter', type=int,
-        help='RANCAC convergence criteria: maximum iteration', 
-        required=False,
-        default=4000000)
-
-    parser.add_argument('-rn', '--ransacn', type=int,
-        help='RANSAC: number of pairs to validate at each iteration', 
-        required=False,
-        default=6)
-
-    # checker
-    parser.add_argument('-cs', '--checkersim', type=float, 
-        help='Checker similarity threshold: between 0 and 1', 
-        required=False,
-        default=0.9)   
+        default=135)       
 
     # icp
     parser.add_argument('-it', '--icptranstype', type=str,
@@ -174,7 +118,7 @@ if __name__ == '__main__':
     parser.add_argument('-id', '--icpdist', type=float,
         help='Distance threshold for correspondences set in ICP registration', 
         required=False,
-        default=200)
+        default=3)
 
     parser.add_argument('-ir', '--icprmse', type=float,
         help='RMSE relative threshold for ICP terminaison', # default observed as acceptable
@@ -280,43 +224,7 @@ if __name__ == '__main__':
         # if source != None:
         #     print("process success")
 
-        ########################################### STEP 2: RANSAC alignement##########################################
-
-        # Initial RANSAC alignement based of features
-        """
-        Input:
-            --ransacn: RANSAC: number of pairs to validate at each iteration
-            --checkersim: Checker similarity threshold: between 0 and 1
-        Output:
-            result_global_cfpfh: contains the registration results (open3d.pipelines.registration.RegistrationResult)
-        """
-        
-        result_global_cfpfh = global_registration(source_=source,
-                                            target_=target,
-                                            cfpfh_source_=source_cfpfh,
-                                            cfpfh_target_=target_cfpfh,
-                                            distance_threshold_=args.globaldist,
-                                            transformation_type_=args.globaltranstype,
-                                            n_ransac_=args.ransacn,
-                                            similarity_threshold_=args.checkersim,
-                                            max_iter_=args.ransaciter,
-                                            max_valid_=args.ransacvalid)
-        
-        # if result_global_cfpfh != None:
-        #     print("global registration success")
-
-        # for RANSAC debug
-        # source_transformed_global = copy.deepcopy(source)
-        # source_transformed_global.transform(result_global_cfpfh.transformation)
-        # if args.transform:
-        #     rot_file_global = 'rot_{}_global.pdb'.format(os.path.splitext(source_file)[0])
-        #     transform_coor(source_file_=args.source,
-        #               pdb_ofile_=rot_file_global,
-        #               transformed_coords_=source_transformed_global.points,
-        #               source_color_=source_color)
-
-
-        ########################################### STEP 3: ICP alignement##########################################
+        ########################################### STEP 2: ICP alignement ##########################################
         # Initial ICP alignement based of features
         """
         Input:
@@ -324,10 +232,9 @@ if __name__ == '__main__':
             --icpfitness: Fitness relative threshold for ICP terminaison
         Output:
             result_fine_cfpfh: contains the registration results (open3d.pipelines.registration.RegistrationResult)
-        """
+        """         
         result_fine_cfpfh = fine_registration(source_=source,
                                         target_=target,
-                                        result_ransac_=result_global_cfpfh,
                                         distance_threshold_=args.icpdist,
                                         transformation_type_=args.icptranstype,
                                         relative_rmse_=args.icprmse,
@@ -336,8 +243,9 @@ if __name__ == '__main__':
         
         # if result_fine_cfpfh != None:
         #     print("fine registration success")
+        print("result_fine_cfpfh: ", result_fine_cfpfh.transformation)
 
-        ########################################### STEP 4: Calculate Similarity##########################################
+        ########################################### STEP 3: Calculate Similarity##########################################
         source_transformed_cfpfh = copy.deepcopy(source)
 
         # open3d.geometry.Geometry3D (The estimated transformation matrix: 4*4 float64 numpy array)
@@ -351,37 +259,14 @@ if __name__ == '__main__':
         """
         # source_transformed_cfpfh: transformation result
         source_transformed_cfpfh.transform(result_fine_cfpfh.transformation)
-        # print(np.asarray(source_transformed_cfpfh.points))
-        
-        # Version 1.0: output rotated pdb (fake version)
-        # if args.transform:
-        #     rot_file_cfpfh = 'cfpfh_{}.pdb'.format(os.path.splitext(source_file)[0])
-        #     transform(pdb_ofile_=rot_file_cfpfh,
-        #                 transformed_coords_=source_transformed_cfpfh.points,
-        #                 source_color_=source_color)
 
-        # Version 2.0: output rotated pdb
         if args.transform:
             rot_file_rot = 'rot_{}.pdb'.format(os.path.splitext(source_file)[0])
             transform_coor(source_file_=args.source,
                       pdb_ofile_=rot_file_rot,
                       transformed_coords_=source_transformed_cfpfh.points,
-                      source_color_=source_color)
-        
-        
+                      source_color_=source_color)              
 
-        """
-        Version 1.0: Do not consider ligands   
-        """
-        # output rotated ligand and/or protein mol2
-        # if args.ligandtransform is not None:
-        #     for molecule in args.ligandtransform:
-        #         lig = os.path.basename(molecule)
-        #         cfpfh_lig = 'cfpfh_{}'.format(lig)
-        #         transform_ligand(molecule,
-        #                     result_fine_cfpfh.transformation,
-        #                     cfpfh_lig)
-      
         ph4_ext = _ph4_ext_pdb_(source_transformed_cfpfh.points, target.points, 
                                             source_prop, target_prop, 1.5)
         
@@ -393,7 +278,6 @@ if __name__ == '__main__':
         
         # Use tversky_similarity to calculate similarity score
         score = ph4_ext.tversky_similarity()
-
 
 
         ########################################### Write out the result ##########################################
@@ -417,11 +301,6 @@ if __name__ == '__main__':
                          "C_contrib\tN_contrib\tO_contrib\tS_contrib\t"
 
                          "G_fitness\tG_RMSE\tICP_fitness\tICP_RMSE\t"
-
-                         "G_11\tG_12\tG_13\tG_14\t"
-                         "G_21\tG_22\tG_23\tG_24\t"
-                         "G_31\tG_32\tG_33\tG_34\t"
-                         "G_41\tG_42\tG_43\tG_44\t"
 
                          "ICP_11\tICP_12\tICP_13\tICP_14\t"
                          "ICP_21\tICP_22\tICP_23\tICP_24\t"
@@ -449,26 +328,8 @@ if __name__ == '__main__':
                                ratio_N_in_aligned,
                                ratio_O_in_aligned,
                                ratio_S_in_aligned,
-                               result_global_cfpfh.fitness,
-                               result_global_cfpfh.inlier_rmse,
                                result_fine_cfpfh.fitness,
                                result_fine_cfpfh.inlier_rmse,
-                               np.array(result_global_cfpfh.transformation)[0][0],
-                               np.array(result_global_cfpfh.transformation)[0][1],
-                               np.array(result_global_cfpfh.transformation)[0][2],
-                               np.array(result_global_cfpfh.transformation)[0][3],
-                               np.array(result_global_cfpfh.transformation)[1][0],
-                               np.array(result_global_cfpfh.transformation)[1][1],
-                               np.array(result_global_cfpfh.transformation)[1][2],
-                               np.array(result_global_cfpfh.transformation)[1][3],
-                               np.array(result_global_cfpfh.transformation)[2][0],
-                               np.array(result_global_cfpfh.transformation)[2][1],
-                               np.array(result_global_cfpfh.transformation)[2][2],
-                               np.array(result_global_cfpfh.transformation)[2][3],
-                               np.array(result_global_cfpfh.transformation)[3][0],
-                               np.array(result_global_cfpfh.transformation)[3][1],
-                               np.array(result_global_cfpfh.transformation)[3][2],
-                               np.array(result_global_cfpfh.transformation)[3][3],
                                np.array(result_fine_cfpfh.transformation)[0][0],
                                np.array(result_fine_cfpfh.transformation)[0][1],
                                np.array(result_fine_cfpfh.transformation)[0][2],
@@ -487,8 +348,8 @@ if __name__ == '__main__':
                                np.array(result_fine_cfpfh.transformation)[3][3]
                                ))
 
-        # cleaning
-        if source_file == target_file:
-            os.system('rm {}'.format(source_file))
-        else:
-            os.system('rm {} {}'.format(source_file, target_file))
+        # # cleaning
+        # # if source_file == target_file:
+        # #     os.system('rm {}'.format(source_file))
+        # # else:
+        # #     os.system('rm {} {}'.format(source_file, target_file))

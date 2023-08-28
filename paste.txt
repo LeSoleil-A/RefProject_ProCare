@@ -3,12 +3,26 @@ conda activate procare
 python procare_launcher.py -s 2rh1_cavity.mol2 -t 5d6l_cavity.mol2 --transform --ligandtransform 2rh1_ligand.mol2
 
 pip install procare_python_package/
+
+# RANSAC + ICP
 python pdb_launcher.py -s 1ha3A.pdb -t 1yr8A.pdb --transform
-
 python pdb_launcher.py -s ./poc_sample/3tui_ADP_C_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb --transform
-
 python pdb_launcher.py -s ./poc_sample/3tui_ADP_C_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb --transform
-
 python pdb_launcher.py -t ./poc_sample/3tui_ADP_C_1.pdb -s ./poc_sample/1g9v_HEM_A_1.pdb --transform
+
+
+
+# test on the same pockets -- quite accurate
+python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb --transform
+
+# best pairs
+python pdb_launcher.py -s ./poc_sample/1g9v_HEM_A_1.pdb -t ./poc_sample/2zfb_HEM_A_1.pdb --transform
+
+# ICP -- not effective
+python icp_launcher.py -s ./poc_sample/3tui_ADP_C_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb --transform
+
+
+
+
 
 pcl_viewer xxx.pcd
