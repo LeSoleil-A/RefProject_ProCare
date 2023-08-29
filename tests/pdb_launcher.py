@@ -271,6 +271,10 @@ if __name__ == '__main__':
                                              max_nn_normal_=args.normalmaxn,
                                              max_nn_feature_=args.featuremaxn)
         
+        # for debug
+        # print("source_cfpfh: ", (np.array(source_cfpfh.data)).shape)
+        print("source_cfpfh: ", source_cfpfh.dimension())
+        
         target_cfpfh, target = process_pointcloud(pointcloud_=target,
                                          radius_normal_=args.normalrad,
                                          radius_feature_=args.featurerad,

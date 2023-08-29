@@ -17,7 +17,6 @@ python pdb_launcher.py -s ./poc_sample/3tui_ADP_C_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/3tui_ADP_C_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3tui_ADP_C_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/3tui_ADP_C_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/3tui_ADP_C_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1p9b_GDP_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/1p9b_GDP_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1p9b_GDP_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -37,7 +36,6 @@ python pdb_launcher.py -s ./poc_sample/1p9b_GDP_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/1p9b_GDP_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1p9b_GDP_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/1p9b_GDP_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/1p9b_GDP_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1g9v_HEM_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/1g9v_HEM_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1g9v_HEM_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -57,7 +55,6 @@ python pdb_launcher.py -s ./poc_sample/1g9v_HEM_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/1g9v_HEM_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1g9v_HEM_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/1g9v_HEM_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/1g9v_HEM_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/2po0_ADP_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/2po0_ADP_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/2po0_ADP_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -77,7 +74,6 @@ python pdb_launcher.py -s ./poc_sample/2po0_ADP_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/2po0_ADP_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/2po0_ADP_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/2po0_ADP_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/2po0_ADP_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1h74_ADP_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/1h74_ADP_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1h74_ADP_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -97,7 +93,6 @@ python pdb_launcher.py -s ./poc_sample/1h74_ADP_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/1h74_ADP_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1h74_ADP_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/1h74_ADP_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/1h74_ADP_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/2zfb_HEM_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/2zfb_HEM_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/2zfb_HEM_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -117,7 +112,6 @@ python pdb_launcher.py -s ./poc_sample/2zfb_HEM_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/2zfb_HEM_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/2zfb_HEM_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/2zfb_HEM_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/2zfb_HEM_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1ls9_HEM_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/1ls9_HEM_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1ls9_HEM_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -137,7 +131,6 @@ python pdb_launcher.py -s ./poc_sample/1ls9_HEM_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/1ls9_HEM_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1ls9_HEM_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/1ls9_HEM_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/1ls9_HEM_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3jv2_ADP_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/3jv2_ADP_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3jv2_ADP_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -157,7 +150,6 @@ python pdb_launcher.py -s ./poc_sample/3jv2_ADP_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/3jv2_ADP_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3jv2_ADP_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/3jv2_ADP_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/3jv2_ADP_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1u0x_HEM_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/1u0x_HEM_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1u0x_HEM_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -177,7 +169,6 @@ python pdb_launcher.py -s ./poc_sample/1u0x_HEM_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/1u0x_HEM_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1u0x_HEM_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/1u0x_HEM_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/1u0x_HEM_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/4g5r_GDP_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/4g5r_GDP_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/4g5r_GDP_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -197,7 +188,6 @@ python pdb_launcher.py -s ./poc_sample/4g5r_GDP_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/4g5r_GDP_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/4g5r_GDP_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/4g5r_GDP_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/4g5r_GDP_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1sd0_ADP_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/1sd0_ADP_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1sd0_ADP_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -217,7 +207,6 @@ python pdb_launcher.py -s ./poc_sample/1sd0_ADP_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/1sd0_ADP_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1sd0_ADP_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/1sd0_ADP_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/1sd0_ADP_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3cy0_HEM_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/3cy0_HEM_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3cy0_HEM_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -237,7 +226,6 @@ python pdb_launcher.py -s ./poc_sample/3cy0_HEM_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/3cy0_HEM_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3cy0_HEM_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/3cy0_HEM_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/3cy0_HEM_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/4arz_GDP_B_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/4arz_GDP_B_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/4arz_GDP_B_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -257,7 +245,6 @@ python pdb_launcher.py -s ./poc_sample/4arz_GDP_B_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/4arz_GDP_B_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/4arz_GDP_B_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/4arz_GDP_B_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/4arz_GDP_B_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1b38_ATP_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/1b38_ATP_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1b38_ATP_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -277,7 +264,6 @@ python pdb_launcher.py -s ./poc_sample/1b38_ATP_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/1b38_ATP_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1b38_ATP_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/1b38_ATP_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/1b38_ATP_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1ek0_GDP_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/1ek0_GDP_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1ek0_GDP_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -297,7 +283,6 @@ python pdb_launcher.py -s ./poc_sample/1ek0_GDP_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/1ek0_GDP_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1ek0_GDP_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/1ek0_GDP_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/1ek0_GDP_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1f2u_ATP_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/1f2u_ATP_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1f2u_ATP_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -317,7 +302,6 @@ python pdb_launcher.py -s ./poc_sample/1f2u_ATP_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/1f2u_ATP_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1f2u_ATP_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/1f2u_ATP_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/1f2u_ATP_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3e1y_ATP_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/3e1y_ATP_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3e1y_ATP_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -337,7 +321,6 @@ python pdb_launcher.py -s ./poc_sample/3e1y_ATP_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/3e1y_ATP_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3e1y_ATP_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/3e1y_ATP_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/3e1y_ATP_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3lev_ATP_H_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/3lev_ATP_H_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3lev_ATP_H_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -357,7 +340,6 @@ python pdb_launcher.py -s ./poc_sample/3lev_ATP_H_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/3lev_ATP_H_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/3lev_ATP_H_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/3lev_ATP_H_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/3lev_ATP_H_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1e79_ATP_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
 python pdb_launcher.py -s ./poc_sample/1e79_ATP_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1e79_ATP_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
@@ -377,24 +359,3 @@ python pdb_launcher.py -s ./poc_sample/1e79_ATP_A_1.pdb -t ./poc_sample/1f2u_ATP
 python pdb_launcher.py -s ./poc_sample/1e79_ATP_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
 python pdb_launcher.py -s ./poc_sample/1e79_ATP_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
 python pdb_launcher.py -s ./poc_sample/1e79_ATP_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/1e79_ATP_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/1p9b_GDP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/2po0_ADP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/1h74_ADP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/2zfb_HEM_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/1ls9_HEM_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/3jv2_ADP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/1u0x_HEM_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/4g5r_GDP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/1sd0_ADP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/3cy0_HEM_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/4arz_GDP_B_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/1b38_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/1ek0_GDP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/1f2u_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/3e1y_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/3lev_ATP_H_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/1e79_ATP_A_1.pdb
-python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/rot_1g9v_HEM_A_1.pdb

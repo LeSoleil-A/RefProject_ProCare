@@ -18,10 +18,16 @@ python pdb_launcher.py -s ./poc_sample/rot_1g9v_HEM_A_1.pdb -t ./poc_sample/1g9v
 # best pairs
 python pdb_launcher.py -s ./poc_sample/1g9v_HEM_A_1.pdb -t ./poc_sample/2zfb_HEM_A_1.pdb --transform
 
+
+
+# debate data
+python pdb_launcher.py -s ./poc_sample/3e1y_ATP_A_1.pdb -t ./poc_sample/2po0_ADP_A_1.pdb --transform
+python pdb_launcher.py -s ./poc_sample/3lev_ATP_H_1.pdb -t ./poc_sample/3tui_ADP_C_1.pdb --transform
+
+
+
 # ICP -- not effective
 python icp_launcher.py -s ./poc_sample/3tui_ADP_C_1.pdb -t ./poc_sample/1g9v_HEM_A_1.pdb --transform
-
-
 
 
 
