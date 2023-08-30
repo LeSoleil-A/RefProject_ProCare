@@ -1,0 +1,4 @@
+3lin_E13_B_1.pdb    3lit_E15_A_1.pdb    0.8107    0.2868(0.3293)
+2r6x_ATP_A_1.pdb    2r6t_ATP_A_1.pdb    0.9506    0.9449
+9mht_SAH_A_1.pdb    1sg9_SAM_A_1.pdb    0.6856    0.1658
+3lir_EEC_A_1.pdb    3lil_EEA_A_1.pdb    0.8501    0.9726

@@ -1,0 +1,11 @@
+       s                  t                pps            pro
+3e1y_ATP_A_1.pdb   2po0_ADP_A_1.pdb       0.2517         0.5621
+3lev_ATP_H_1.pdb   3tui_ADP_C_1.pdb       0.2545         0.4878
+3jv2_ADP_A_1.pdb   1e79_ATP_A_1.pdb       0.6020         0.351 (in this sample, procare seems more reasonable)
+4g5r_GDP_A_1.pdb   4arz_GDP_B_1.pdb       0.6303         0.4075
+4arz_GDP_B_1.pdb   1e79_ATP_A_1.pdb       0.6083         0.1327
+1f2u_ATP_A_1.pdb   3tui_ADP_C_1.pdb       0.6353         0.277
+ 
+ 
+ 
+3e1y, 3lev have too few atoms
